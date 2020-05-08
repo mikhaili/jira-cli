@@ -16,19 +16,20 @@
     "fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@types/jest": "^25.2.1",
-    "alasql": "^0.4.11",
+    "alasql": "^0.6.0",
     "async": "^2.6.3",
     "cheerio": "^1.0.0-rc.3",
     "cli-table": "^0.2.0",
     "commander": "~1.1.1",
     "dargs": "^5.1.0",
-    "fs": "0.0.1-security",
+    "inquirer": "^7.1.0",
+    "inquirer-autocomplete-prompt": "^1.0.2",
     "jira-connector": "^3.1.0",
     "moment": "^2.24.0",
     "nodemailer": "^6.4.6",
     "openurl": "^1.1.0",
-    "qs": "~> 1.0.0",
+    "pad": "^3.2.0",
+    "qs": "^6.9.4",
     "superagent": "~3.7.0",
     "underscore": "^1.10.2"
   },
@@ -58,11 +59,11 @@
     }
   },
   "devDependencies": {
-    "ava": "^3.7.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^25.2.1",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
-    "rimraf": "^3.0.2",
-    "testr": "0.0.5"
+    "rimraf": "^3.0.2"
   }
 }

@@ -12,7 +12,7 @@ var program = require('commander');
 
 var config = require('../lib/config');
 
-var auth = require('../lib/auth');
+const Auth = require('../lib/auth');
 
 var ls = require('../lib/jira/ls');
 
@@ -192,14 +192,14 @@ program.command('new [key]').description('Create an issue or a sub-task').option
   new_create.create(options, finalCb);
 });
 program.command('config').description('Change configuration').option('-c, --clear', 'Clear stored configuration').option('-u, --url', 'Print url in config').option('-t, --template <template>', 'Start config with this given template', String).option('-v, --verbose', 'verbose debugging output').action(function (options) {
+  const auth = new Auth(config);
   if (options.clear) {
-    auth.clearConfig();
+    return auth.clearConfig();
+  }
+  if (options.url) {
+    auth.printUrl();
   } else {
-    if (options.url) {
-      console.log(config.auth.url);
-    } else {
-      auth.setup(options);
-    }
+    auth.setup(options);
   }
 }).on('--help', function () {
   console.log('  Config Help:');
