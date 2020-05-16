@@ -14,7 +14,7 @@ describe('utils module', function () {
       //Action
       utils.createDirectory('directoryToCreate');
       //Assert
-      expect(fs.mkdir).toHaveBeenCalled();
+      expect(fs.mkdirSync).toHaveBeenCalled();
     });
 
     it('should not create directory, when directory exist', () => {
@@ -23,7 +23,7 @@ describe('utils module', function () {
       //Action
       utils.createDirectory('directoryToCreate');
       //Assert
-      expect(fs.mkdir).not.toHaveBeenCalled();
+      expect(fs.mkdirSync()).not.toHaveBeenCalled();
     });
   });
 
