@@ -4,18 +4,20 @@ const config = require('../../../lib/config');
 jest.mock('../../../lib/config');
 
 describe('auth api updateConfig', () => {
+  let auth;
   beforeEach(() => {
+    auth = new Auth(config);
     jest.clearAllMocks();
   });
 
   it('should update config when valid config data provided', () => {
+    // Arrange
     const spyUpdate = jest.spyOn(config, 'update');
-
-    const auth = new Auth(config);
-    const configData = { url: 'https://great-url.com', pass: 'strong-pass', user: 'smart-user' };
+    const configData = { url: 'https://good-url.com', pass: 'strong-pass', user: 'smart-user' };
     const option = {};
+    // Action
     auth.updateConfig(configData, option);
-
+    // Assert
     expect(config.update).toHaveBeenCalledWith(
       'auth', {
         url: auth.formatUrl(configData.url),
@@ -28,15 +30,16 @@ describe('auth api updateConfig', () => {
 
   [
     { pass: 'strong-pass', user: 'smart-user' },
-    { url: 'strong-pass', user: 'smart-user' },
-    { url: 'strong-pass', pass: 'smart-user' },
+    { url: 'https://good-url.com', user: 'smart-user' },
+    { url: 'https://good-url.com', pass: 'smart-user' },
     undefined
-  ].forEach((data) => {
-    it('should return error when some data not provided', () => {
-      const auth = new Auth(config);
+  ].forEach((data, index) => {
+    it('should return error, when some data not provided failed on ' + index, () => {
+      // Arrange
       const option = {};
+      // Action
       const { err } = auth.updateConfig(data, option);
-
+      // Assert
       expect(err).toBeDefined();
       expect(config.update).not.toHaveBeenCalled();
     });
