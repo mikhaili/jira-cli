@@ -23,7 +23,7 @@ describe('utils module', function () {
       //Action
       utils.createDirectory('directoryToCreate');
       //Assert
-      expect(fs.mkdirSync()).not.toHaveBeenCalled();
+      expect(fs.mkdirSync).not.toHaveBeenCalled();
     });
   });
 
