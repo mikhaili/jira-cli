@@ -191,26 +191,37 @@ program.command('new [key]').description('Create an issue or a sub-task').option
   options.key = key;
   new_create.create(options, finalCb);
 });
-program.command('config').description('Change configuration').option('-c, --clear', 'Clear stored configuration').option('-u, --url', 'Print url in config').option('-t, --template <template>', 'Start config with this given template', String).option('-v, --verbose', 'verbose debugging output').action(function (options) {
-  const auth = new Auth(config);
-  if (options.clear) {
-    return auth.clearConfig();
-  }
-  if (options.url) {
-    auth.printUrl();
-  } else {
+
+program.command('config')
+  .description('Change configuration')
+  .option('-c, --clear', 'Clear stored configuration')
+  .option('-u, --url', 'Print url in config')
+  .option('-t, --template <template>', 'Start config with this given template', String)
+  .option('-v, --verbose', 'verbose debugging output')
+  .action(function (options) {
+    const auth = new Auth(config);
+    if (options.clear) {
+      auth.clearConfig();
+      return;
+    }
+    if (options.url) {
+      auth.printUrl();
+      return;
+    }
+
     auth.setup(options);
-  }
-}).on('--help', function () {
-  console.log('  Config Help:');
-  console.log();
-  console.log('    Jira URL: https://foo.atlassian.net/');
-  console.log('    Username: user (for user@foo.bar)');
-  console.log('    Password: Your password');
-  console.log('');
-  console.log('WARNING:After three failed login attempts Atlassian forces a CAPTCHA login');
-  console.log('WARNING:  which can only be done via the browser.');
-});
+  })
+  .on('--help', function () {
+    console.log('  Config Help:');
+    console.log();
+    console.log('    Jira URL: https://foo.atlassian.net/');
+    console.log('    Username: user (for user@foo.bar)');
+    console.log('    Password: Your password');
+    console.log('');
+    console.log('WARNING:After three failed login attempts Atlassian forces a CAPTCHA login');
+    console.log('WARNING:  which can only be done via the browser.');
+  });
+
 program.command('sprint').description('Works with sprint boards\n' + '\t\t\t\tWith no arguments, displays all rapid boards\n' + '\t\t\t\tWith -r argument, attempt to find a single rapid board\n ' + '\t\t\t\tand display its active sprints\n' + '\t\t\t\tWith both -r and -s arguments\n ' + '\t\t\t\tattempt to get a single rapidboard/ sprint and show its issues. If\n ' + '\t\t\t\ta single sprint board isnt found, show all matching sprint boards\n').option('-r, --rapidboard <name>', 'Rapidboard to show sprints for', String).option('-s, --sprint <name>', 'Sprint to show the issues', String).option('-a, --add <projIssue> ', 'Add project issue to sprint', String).option('-i, --sprintId <sprintId> ', 'Id of the sprint which you want your issues to be added to', String).option('-j, --jql <jql> ', 'jql of the issues which you want to add to the sprint', String).action(function (options) {
   if (options.add) {
     add_to_sprint.addIssuesViaKey(options, finalCb);
