@@ -198,6 +198,7 @@ program.command('config')
   .option('-u, --url', 'Print url in config')
   .option('-t, --template <template>', 'Start config with this given template', String)
   .option('-v, --verbose', 'verbose debugging output')
+  .option('-u, --update', 'update password')
   .action(function (options) {
     const auth = new Auth(config);
     if (options.clear) {
@@ -206,6 +207,11 @@ program.command('config')
     }
     if (options.url) {
       auth.printUrl();
+      return;
+    }
+
+    if (options.update) {
+      auth.update(options);
       return;
     }
 
